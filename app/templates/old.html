@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Quick Form{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>
+    	{{ str }}
+    </h1>
+</div>
+
+{% for question in q %}
+<div class="div_question panel panel-default">
+  <div class="panel-body">
+    <h1>
+    	<a href="{{ url_for('main.detail',id=question.id) }}">{{ question.title }}</a>
+	</h1>
+    <h3>
+      <span class="glyphicon glyphicon-link"></span>
+      <span>{{ url_for('feed._feed',id=question.id, _external=True) }}</span>
+      <a class="goto_feed" href="{{ url_for('feed._feed',id=question.id, _external=True) }}" target="_blank"><span class="glyphicon glyphicon-send"></span></a>
+    </h3>
+  </div>
+  <div class="panel-footer">
+    
+    <div class="div_del_ques pull-right">
+      <a class="btn_edit" href="{{ url_for('main.edit',id=question.id) }}"><span class="glyphicon glyphicon-pencil"></span></a>
+      <span>&nbsp;|&nbsp;</span>
+      <div class="q_id hidden">{{ question.id }}</div>
+      <a class="btn_close"><span class="glyphicon glyphicon-trash"></span></a>
+    </div>
+    <div>
+     <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+  	 <span>{{ question.timestamp | format_time}}</span>
+    </div>
+  </div>
+</div>		
+{% endfor %}
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type=text/javascript src="{{ url_for('static', filename='old.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title%} Administer {% endblock %} 
+
+{% block content %}
+<div class="container">
+	<div class="page-header">
+	  <h1>Administer <small>Subtext for header</small></h1>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">User Info</div>
+  		<div class="panel-body">
+    		<table class="table table-hover">
+				<tr>
+					<th>
+						ID
+					</th>
+					<th>
+						UserName
+					</th>
+					<th>
+						E-mail
+					</th>
+					<th>
+						Questionnaire
+					</th>
+				</tr>
+				
+					{% for user in u %}
+					<tr>
+						<td>
+							{{ user.id }}
+						</td>
+						<td>
+							{{ user.username }}
+						</td>
+						<td>
+							{{ user.email }}
+						</td>
+						<td>
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{ user.id }}"><span class="glyphicon glyphicon-th-list"></span></button>
+						</td>
+					</tr>
+					{% endfor %}
+				
+			</table>
+  		</div>
+	</div>
+	
+</div>
+
+{% for user in u %}
+<div class="modal fade" id="{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{ user.username }}'s Questionnaire</h4>
+      </div>
+      <div class="modal-body">
+        <div class="list-group">
+        	{% for ques in q %}
+	        	{% if ques.user_id == user.id | string %}
+		  			<a href="#" class="list-group-item">
+		  				<span class="badge">{{ ques.count }}</span>
+				    <h4 class="list-group-item-heading">{{ ques.title }}</h4>
+				    <p class="list-group-item-text">{{ ques.timestamp | format_time }}</p>
+				    
+				    </a>
+
+			    {% endif %}
+		  	{% endfor %}
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
+<script type=text/javascript src="{{ url_for('static', filename='jquery.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='bootstrap.js') }}"></script>
+
+{% endblock %}

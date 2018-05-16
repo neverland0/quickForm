@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Quick Form{% endblock %}
+
+{% block page_content %}
+<script type="text/javascript">
+	$FEED_URL = "{{ url_for('feed._feed',id=id, _external=True) }}"
+</script>
+<div class="page-body">
+
+<div class="page-header">
+	<div class="row">
+		<h1>
+			<input class="col-md-9 col-md-offset-1" type="text" name="title" id="title" placeholder="Questionnaire Title">	
+		</h1>
+	</div>
+</div>
+
+
+<div class="div_question panel panel-default ">
+	<div class="panel-body ">
+		
+		<div class="div_top row">
+			
+			<div class="col-md-6 col-md-offset-1">
+				<h3>
+					<input type="text" class="form-control" name="question_text" id="question_text" placeholder="Question">	
+				</h3>
+			</div>
+			
+			<div class="col-md-3 col-md-offset-1">
+				<h3>
+				<select id="kind" class="kind form-control">
+					<option value="single">single</option>
+					<option value="multi">multi</option>
+					<option value="blank">blank</option>
+				</select>
+				</h3>	
+			</div>
+				
+		</div>
+		
+		
+		
+		<div class="div_content row">
+			<div class="div_choice col-md-6 col-md-offset-1">
+				
+				<div class="choice_item input-group">
+					<a class="input-group-addon"><span class="glyphicon glyphicon-record"></span></a>
+					<input type="text" class="form-control" name="choice_text" id="choice_text" placeholder="choice">
+					<a class="input-group-addon del_choice"><span class="glyphicon glyphicon-remove"></span></a>	
+				</div>
+				<a class="add_choice btn btn-primary btn-block"><span class="glyphicon glyphicon-plus"></span></a>
+			</div>
+			
+			<div class="div_blank col-md-6 col-md-offset-1">
+				<input class="form-control" id="disabledInput" type="text" placeholder="Answer" disabled>
+			</div>
+		</div>
+		
+	</div>	
+	<div class="panel-footer">
+		<a class="btn_close"><span class="glyphicon glyphicon-trash"></span></a>
+	</div>
+</div>
+
+<a class="btn_add_question btn btn-primary">New</a>
+<a class="btn_submit btn btn-success">Submit</a>
+
+<div class="get_back">
+	<textarea id="source_url"></textarea><button id="cp">COPY</button>
+</div>
+
+</div>
+{% endblock %}
+
+{% block styles %} 
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='design.css') }}" />
+
+{% endblock %}
+
+
+{% block scripts %}
+{{ super() }}
+<script type=text/javascript src="{{ url_for('static', filename='design.js') }}"></script>
+{% endblock %}

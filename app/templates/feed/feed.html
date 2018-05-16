@@ -1,0 +1,47 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title%} feed {% endblock %} 
+
+{% block content %}
+	<div class="container">
+		<form action="/f/{{id}}" method="post">
+	<h1>feed</h1>
+	<h1>{{ title }}</h1>
+	{% macro render_item(item) %}
+		{% if item.kind == "single" %}
+			{% for choice in item.choice if item.choice %}
+				<div class="radio">
+  					<label>
+    					<input type="radio" name="{{ item.question }}" value="{{ choice }}">
+    					{{ choice }}
+  					</label>
+				</div>
+			{% endfor %}
+		{% elif item.kind == "multi" %}
+			{% for choice in item.choice if item.choice %}
+				<div class="checkbox">
+  					<label>
+    					<input type="checkbox" name="{{ item.question }}" value="{{ choice }}">
+    					{{ choice }}
+  					</label>
+				</div>
+			{% endfor %}
+		{% elif item.kind == "blank" %}
+			<input type="text" name="{{ item.question }}" class="form-control" placeholder="blank">
+		{% endif %}
+	{% endmacro %}
+
+	{% for item in items if item.question %}
+		<div class="panel panel-default">
+  			<div class="panel-body">
+  				<span>{{ item.no }}</span>
+  				<h3>{{ item.question }}</h3>
+    			{{ render_item(item) }}		
+  			</div>
+		</div>
+		
+	{% endfor %}
+	<button type="submit" class="btn btn-default">Submit</button>
+	</form>
+	</div>
+{% endblock %}}

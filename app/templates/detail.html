@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}Quick Form{% endblock %}
+
+{% block page_content %}
+
+<script src="{{ url_for('static',filename='Chart.bundle.js') }}"></script>
+
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><a href="#specific" data-toggle="tab">Specific</a></li>
+  <li role="presentation"><a href="#chart" data-toggle="tab">Chart</a></li>
+  
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade in active" id="specific">
+        <nav aria-label="...">
+            <ul class="pager">
+                <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+                <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+        </nav>
+        <div class="row">
+            <div class="answer-list col-md-6 col-md-offset-3">
+                {% for answer in answer_list %}
+                <div>
+                    <div class="page-header">
+                      <h1> <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> {{ answer.timestamp | format_time }}</h1>
+                    </div>
+                    
+                    {% for answer_item in answer.content %}
+                        <span>{{ answer_item.no }}</span>
+                        <h3>{{ answer_item.question }}<span class="label label-info">{{answer_item.kind}}</span></h3>
+                        {% if answer_item.kind == "blank" %}
+                            <ul class="list-group">
+                            {% for choice_item in answer_item.choice %}
+                                {% if choice_item[1] %}
+                                    <li class="list-group-item list-group-item-success">{{choice_item[0]}}</li>
+                                
+                                {% endif %}
+                                
+                                
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <ul class="list-group">
+                            {% for choice_item in answer_item.choice %}
+                                {% if choice_item[1] %}
+                                    <li class="list-group-item list-group-item-success">{{choice_item[0]}}</li>
+                                {% else %}
+                                    <li class="list-group-item">{{choice_item[0]}}</li>
+                                {% endif %}
+                                
+                                
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                        
+                    {% endfor %}
+                </div>
+                {% endfor %}
+                
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade panel panel-default" id="chart">
+      <div class="panel-body">
+        <h1>{{x}} Answer Counts</h1>
+        <h2>{{ q.title }}</h2>
+        {% for item in i %}
+            <h1>{{ item.no }}{{ item.question }}</h1>
+            <div class="chart_container">
+                <canvas name="myChart" class="{{ item.kind }}"></canvas>     
+            </div>
+                   
+            
+        {% endfor %}
+      </div>
+      
+    </div>		
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
+<script type="text/javascript">
+    
+  function addData(chart, label, data, color) {
+    chart.data.labels.push(label);
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.push(data);
+        dataset.backgroundColor.push(color);
+    });
+    chart.update();
+}
+    $.getJSON($SCRIPT_ROOT + '/chart', {
+            id: "{{ q.id }}"
+          }, function(a) {
+            var ctx = document.getElementsByTagName("canvas");
+    for(i = 0,len = ctx.length;i < len;i++){
+    ctx_name = ctx[i].className;
+    chart_type = "bar";
+    if(ctx_name == "single"){
+        chart_type = "pie";
+    }
+    else if(ctx_name == "multi"){
+        chart_type = "bar";
+    }
+    var myChart = new Chart(ctx[i], {
+        type: chart_type,
+        data: {
+            labels: [],
+            datasets: [{
+                label: '# of Votes',
+                data: [],
+                backgroundColor:[],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    for(var key in a[i]){
+        x = Math.floor(Math.random()*256);
+        y = Math.floor(Math.random()*256);
+        z = Math.floor(Math.random()*256);
+        color = 'rgba('+x+','+y+','+z+','+'0.8'+')';
+      addData(myChart,key,a[i][key],color);
+    }
+    }
+
+          });
+</script>
+<script type=text/javascript src="{{ url_for('static', filename='detail.js') }}"></script>
+{% endblock %}
+
+{% block styles %} 
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='detail.css') }}" />
+
+{% endblock %}
