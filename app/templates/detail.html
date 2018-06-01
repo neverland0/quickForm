@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}Quick Form{% endblock %}
+{% block title %}快捷表单{% endblock %}
 
 {% block page_content %}
 
 <script src="{{ url_for('static',filename='Chart.bundle.js') }}"></script>
 
 <ul class="nav nav-tabs">
-  <li role="presentation" class="active"><a href="#specific" data-toggle="tab">Specific</a></li>
-  <li role="presentation"><a href="#chart" data-toggle="tab">Chart</a></li>
-  
+  <li role="presentation" class="active"><a href="#specific" data-toggle="tab">个别</a></li>
+  <li role="presentation"><a href="#chart" data-toggle="tab">图表</a></li>
+  <li role="presentation"><a href="#table" data-toggle="tab">表格</a></li>
 </ul>
 <div class="tab-content">
     <div class="tab-pane fade in active" id="specific">
@@ -24,18 +24,28 @@
                 {% for answer in answer_list %}
                 <div>
                     <div class="page-header">
+                        <h1 >{{loop.index}}/{{answer_list | length}}</h1>
                       <h1> <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> {{ answer.timestamp | format_time }}</h1>
                     </div>
                     
                     {% for answer_item in answer.content %}
-                        <span>{{ answer_item.no }}</span>
-                        <h3>{{ answer_item.question }}<span class="label label-info">{{answer_item.kind}}</span></h3>
+                        
+                        <h3><span>{{ answer_item.no }}.</span>{{ answer_item.question }}<span class="label label-info">
+                            
+                            {% if answer_item.kind == 'single' %}
+                            单选
+                            {% elif answer_item.kind == 'multi' %}
+                            多选
+                            {% elif answer_item.kind == 'blank' %}
+                            填空
+                            {% endif %}
+                        </span></h3>
                         {% if answer_item.kind == "blank" %}
                             <ul class="list-group">
-                            {% for choice_item in answer_item.choice %}
-                                {% if choice_item[1] %}
+                            {% for choice_item in answer_item.choice if choice_item[1] %}
+                                {% if loop.index == 1 %}
                                     <li class="list-group-item list-group-item-success">{{choice_item[0]}}</li>
-                                
+                                    
                                 {% endif %}
                                 
                                 
@@ -64,10 +74,10 @@
     </div>
     <div class="tab-pane fade panel panel-default" id="chart">
       <div class="panel-body">
-        <h1>{{x}} Answer Counts</h1>
+        <h1>{{x}} 份回复</h1>
         <h2>{{ q.title }}</h2>
         {% for item in i %}
-            <h1>{{ item.no }}{{ item.question }}</h1>
+            <h1>{{ item.no }}.{{ item.question }}</h1>
             <div class="chart_container">
                 <canvas name="myChart" class="{{ item.kind }}"></canvas>     
             </div>
@@ -76,7 +86,58 @@
         {% endfor %}
       </div>
       
-    </div>		
+    </div>	
+    
+    <div class="tab-pane fade " id="table">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+        <h1>{{ q.title }}</h1>
+        {% for item in i %}
+            <h2>{{ item.no }}.{{ item.question }}</h2>
+            {% if item.kind == 'single' %}
+                
+                <table class="table table-striped">
+                    <tr>
+                        <th>选项（单选）</th>
+                        <th>数量</th>
+                        <th>比率</th>
+                    </tr>
+                    {% for choice in item.choice %}
+                    <tr>
+                        <td>{{ choice }}</td>
+                        <td>{{ choice | get_count(item.vote) }}</td>
+                        <td>{{ choice | get_percent(item.vote) }}%</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% elif item.kind == 'multi' %}
+                <table class="table table-striped">
+                    <tr>
+                        <th>选项（多选）</th>
+                        <th>数量</th>
+                        <th>比率</th>
+                    </tr>
+                    {% for choice in item.choice %}
+                    <tr>
+                        <td>{{ choice }}</td>
+                        <td>{{ choice | get_count(item.vote) }}</td>
+                        <td>{{ choice | get_percent(item.vote) }}%</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% elif item.kind == 'blank' %}
+                <ul class="list-group">
+                {% for choice in item.choice %}
+                  <li class="list-group-item">{{ choice }}</li>
+                {% endfor %}
+                </ul>
+                
+            {% endif %}
+        {% endfor %}
+        </div>
+        </div>
+    </div>
+
 </div>
 
 {% endblock %}

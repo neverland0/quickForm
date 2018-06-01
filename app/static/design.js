@@ -87,17 +87,29 @@ $(document).ready(function(){
 		$("html, body").animate({ scrollTop: $(document).height() }, 1000);
 	});
 
+	
+
 	$(".btn_submit").click(function(){
+		question_flag=false;
+		choice_flag=false;
+		same_flag=false;
 		a = $(this).siblings().filter(".div_question");
 		title = $(this).siblings().filter(".page-header").find("#title");
+
+		
 		var ques_nare = new Object();
 		ques_nare.title = title.val();
 		ques_nare.items = new Array();
+
 		count = 1;
 		a.each(function(){
 			//alert($(this).find(".kind").val());
 			var item = new Object();
 			item.question = $(this).find("#question_text").val();
+			if(item.question==null||item.question==''){
+				question_flag=true;	
+			}
+			
 			item.no = count;
 			count++;
 			item.kind = $(this).find(".kind").val();
@@ -105,16 +117,37 @@ $(document).ready(function(){
 			if(item.kind == "single" || item.kind == "multi")
 			{
 				b = $(this).find(".choice_item");
+				
 				b.each(function(){
 					c = $(this).find("#choice_text").val();
+					if(c==null||c==''){
+						choice_flag=true;
+					}
+					
 					item.choice.push(c);
+				});
+				str_choice = item.choice.join(",");
+				item.choice.forEach(function(value,index,array){
+					if((str_choice.indexOf(value))!=(str_choice.lastIndexOf(value)))
+					{
+						same_flag=true;
+					}
 				});
 			}
 			ques_nare.items.push(item);
 		});
 		jsontext = JSON.stringify(ques_nare);
-		
-		$.ajax({
+		if(question_flag){
+			alert('问题不能为空');
+		}
+		else if(choice_flag){
+			alert('选项不能为空');
+		}
+		else if(same_flag){
+			alert('选项不能相同');
+		}
+		else{
+			$.ajax({
 			url : $SCRIPT_ROOT + '/design',
 			type : 'POST',
 			data : jsontext,
@@ -132,6 +165,9 @@ $(document).ready(function(){
 			}
 
 		});
+		}
+		
+		
 	});
 	
 });

@@ -8,7 +8,7 @@
 <div class="page-header">
 	<div class="row">
 		<h1>
-			<input class="col-md-9 col-md-offset-1" type="text" name="title" id="title" placeholder="Questionnaire Title" value="{{ q.title }}">	
+			<input class="col-md-9 col-md-offset-1" type="text" name="title" id="title" placeholder="问卷标题..." value="{{ q.title }}">	
 		</h1>
 	</div>
 </div>
@@ -21,7 +21,7 @@
 			
 			<div class="col-md-6 col-md-offset-1">
 				<h3>
-					<input type="text" class="form-control" name="question_text" id="question_text" placeholder="Question" value="{{ item.question }}">	
+					<input type="text" class="form-control" name="question_text" id="question_text" placeholder="题目..." value="{{ item.question }}">	
 				</h3>
 			</div>
 			
@@ -32,19 +32,19 @@
 					{% if item.kind == "single" %}
 					selected="selected" 
 					{% endif %}
-					 >single</option>
+					 >单选</option>
 					
 					<option value="multi"
 					{% if item.kind == "multi" %}
 					selected="selected" 
 					{% endif %}
-					>multi</option>
+					>多选</option>
 
 					<option value="blank"
 					{% if item.kind == "blank" %}
 					selected="selected" 
 					{% endif %}
-					>blank</option>
+					>填空</option>
 				</select>
 				</h3>	
 			</div>
@@ -58,7 +58,7 @@
 				{% for choice in item.choice %}
 				<div class="choice_item input-group">
 					<a class="input-group-addon"><span class="glyphicon glyphicon-record"></span></a>
-					<input type="text" class="form-control" name="choice_text" id="choice_text" placeholder="choice" value="{{ choice }}">
+					<input type="text" class="form-control" name="choice_text" id="choice_text" placeholder="选项..." value="{{ choice }}">
 					<a class="input-group-addon del_choice"><span class="glyphicon glyphicon-remove"></span></a>	
 				</div>
 				{% endfor %}
@@ -66,7 +66,7 @@
 			</div>
 			
 			<div class="div_blank col-md-6 col-md-offset-1">
-				<input class="form-control" id="disabledInput" type="text" placeholder="Answer" disabled>
+				<input class="form-control" id="disabledInput" type="text" placeholder="简短回复..." disabled>
 			</div>
 		</div>
 		
@@ -77,11 +77,11 @@
 </div>
 {% endfor %}
 
-<a class="btn_add_question btn btn-primary">New</a>
-<a class="btn_submit btn btn-success">ReSubmit</a>
+<a class="btn_add_question btn btn-primary">添加问题</a>
+<a class="btn_submit btn btn-success">提交</a>
 
 <div class="get_back">
-	<textarea id="source_url"></textarea><button id="cp">COPY</button>
+	<textarea id="source_url"></textarea><button id="cp">复制链接</button>
 </div>
 
 </div>

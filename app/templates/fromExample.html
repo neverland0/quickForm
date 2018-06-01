@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}From Example{% endblock %}
+{% block title %}模板库{% endblock %}
 
 {% block page_content %}
 {% for ques in q %}
@@ -19,7 +19,7 @@
     		{% endif %}
     	{% endfor %}
     </ul>
-    <a class="btn btn-default" href="{{ url_for('main.edit',id=ques.id) }}" role="button">Use This</a>
+    <a class="btn btn-default" href="{{ url_for('main.edit',id=ques.id) }}" role="button">使用</a>
   </div>
   
 </div>

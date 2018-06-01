@@ -19,7 +19,7 @@ def login():
             if next is None or not next.startswith('/'):
                 next = url_for('main.index')
             return redirect(next)
-        flash('Invalid username or password.')
+        flash('用户名或密码错误.')
     return render_template('auth/login.html', form=form)
 
 
@@ -27,7 +27,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash('You have been logged out.')
+    flash('你已登出.')
     return redirect(url_for('main.index'))
 
 
@@ -40,6 +40,6 @@ def register():
                     password=form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('You can now login.')
+        flash('你现在可以登录了.')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)

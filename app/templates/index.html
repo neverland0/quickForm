@@ -1,39 +1,159 @@
 {% extends "base.html" %}
 
-{% block title %}Quick Form{% endblock %}
+{% block title %}快捷表单{% endblock %}
 
 {% block page_content %}
-
+<!--
 <div class="jumbotron">
 	<div class="page-header">
     	<h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
 	</div>
 	<div class="btn_col">
-		
+		{% if current_user.is_authenticated %}
 		{% if current_user.is_administrator() %}
 		<div class="btn_example">
-			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.design') }}"> Create Example </a>	
+			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.design') }}"> 创建模板 </a>	
 		</div>
 		<div class="btn_check">
-			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.old',str='Example') }}"> Manage Example </a>	
+			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.old',str='Example') }}"> 管理模板 </a>	
 		</div>
 		<div class="btn_admin">
-			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('admin._admin') }}"> Administer </a>	
+			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('admin._admin') }}"> 管理员面板 </a>	
 		</div>
 		{% else %}
 		<div class="btn_create">
-			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.design') }}"> Create </a>	
+			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.design') }}"> 创建问卷 </a>	
 		</div>
 		<div class="btn_old">
-			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.old',str='My Questionnaire') }}"> Old </a>	
+			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.old',str='My Questionnaire') }}"> 我的问卷 </a>	
 		</div>
 		<div class="btn_from">
-			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.example') }}"> From Example </a>	
+			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.example') }}"> 使用模板 </a>	
 		</div>
 		{% endif %}
-		
+		{% endif %}
 	</div>
 </div>
+-->
+
+{% endblock %}
+{% block index_content %}
+<section class="s1">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6 p1_text">
+				<h1>快捷表单<small>在线制作问卷</small></h1>
+				<ul>
+					<li class="lead">简洁设计界面</li>
+					<li class="lead">三种可选题型</li>
+					<li class="lead">图表一目了然</li>
+				</ul>
+				<div class="row">
+					<div class="col-md-5">
+						<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.design') }}"> 开始使用 </a>		
+					</div>
+				</div>
+				
+			</div>
+			<div class="col-md-6">
+				<div class="p1_image">
+					<img src="../static/design.png">
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="s2">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6 col-md-push-6 p2_text">
+				<h1>图表统计<small>简单高效</small></h1>
+				<ul>
+					<li class="lead">个别数据</li>
+					<li class="lead">统计数据</li>
+					<li class="lead">实时查看</li>
+				</ul>
+				
+				
+			</div>
+			<div class="col-md-6 col-md-pull-6">
+				<div class="p2_image">
+					<img src="../static/chart.png">
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="s3">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6 p3_text">
+				<h1>使用模板<small>快速生成问卷</small></h1>
+				<ul>
+					<li class="lead">多种模板可选</li>
+					<li class="lead">提高工作效率</li>
+					<li class="lead">实时发布</li>
+				</ul>
+				
+				
+			</div>
+			<div class="col-md-6">
+				<div class="p3_image">
+					<img src="../static/post.png">
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="s4">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-3">
+				
+			</div>
+			<div class="col-md-3">
+				<h3>应用场景</h3>
+				<ul class="list-unstyled">
+					<li>
+						活动报名
+					</li>
+					<li>
+						在线订单
+					</li>
+					<li>
+						调查问卷
+					</li>
+				</ul>
+			</div>
+			<div class="col-md-3">
+				<h3>模板</h3>
+				<ul class="list-unstyled">
+					<li>
+						表单模板
+					</li>
+					
+				</ul>
+			</div>
+			<div class="col-md-3">
+				<h3>联系我</h3>
+				<ul class="list-unstyled">
+					<li>
+						E-mail
+					</li>
+					<li>
+						qq
+					</li>
+					<li>
+						tel
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
 {% endblock %}
 {% block styles %} 
 {{ super() }}

@@ -17,12 +17,20 @@ login_manager.login_view = 'auth.login'
 def format_time(value):
     return value.strftime("%Y-%m-%d %H:%M:%S")
 
+def get_count(value,c_list):
+    return c_list.count(value)
+
+def get_percent(value,c_list):
+    n = c_list.count(value)
+    m = len(c_list)
+    if(m == 0):
+        return 0
+    return n/m*100
+
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
-
-
 
     bootstrap.init_app(app)
     mail.init_app(app)
@@ -31,6 +39,8 @@ def create_app(config_name):
     login_manager.init_app(app)
 
     app.jinja_env.filters['format_time'] = format_time
+    app.jinja_env.filters['get_count'] = get_count
+    app.jinja_env.filters['get_percent'] = get_percent
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)

@@ -2,3 +2,9 @@
 	width: 40vw;
 	height: 40vh;
 }
+h1,h2{
+	text-align: center;
+}
+.chart_container{
+	margin-left: 200px;
+}

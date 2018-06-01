@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$("ul").each(function(){
+	$(".div_item ul").each(function(){
 		if($(this).children().length > 3){
 			$(this).children().replaceWith($(this).children().slice(0,2));
 			$(this).append("<p>...</p>");
