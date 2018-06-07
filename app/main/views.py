@@ -15,12 +15,16 @@ def design():
     if request.method == 'POST':
         a = request.get_json(force = True)
         title = a["title"]
+        if(current_user.is_administrator()):
+            tag = a["tag"]
         timestamp = datetime.datetime.now()
         user_id = current_user.get_id()
         items = a["items"]
         q = Questionnaire()
         if(title != ""):
             q.title = title
+        if(current_user.is_administrator()):
+            q.tag = tag
         q.user_id = user_id
         q.timestamp = timestamp
         q.save()
@@ -29,9 +33,11 @@ def design():
             question = item["question"]
             no = item["no"]
             kind = item["kind"]
+            need = item["need"]
             i.question = question
             i.no = no
             i.kind = kind
+            i.need = need
             choice = item["choice"]
             for c in choice:
                 i.choice.append(c)   

@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	
+
 	$(".div_item ul").each(function(){
 		if($(this).children().length > 3){
 			$(this).children().replaceWith($(this).children().slice(0,2));
@@ -14,5 +16,23 @@ $(document).ready(function(){
 				$(this).append("<li></li><li></li><li></li>");
 			}
 		}
+	});
+	$(".div_item").hide();
+	$("#food").show();
+	$("#show_food").click(function(){
+		$(".div_item").hide();
+		$("#food").show();
+	});
+	$("#show_teach").click(function(){
+		$(".div_item").hide();
+		$("#teach").show();
+	});
+	$("#show_sold").click(function(){
+		$(".div_item").hide();
+		$("#sold").show();
+	});
+	$("#show_web").click(function(){
+		$(".div_item").hide();
+		$("#web").show();
 	});
 });

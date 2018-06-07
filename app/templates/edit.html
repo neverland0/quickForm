@@ -1,11 +1,22 @@
 {% extends "design.html" %}
 {% block page_content %}
-<script type="text/javascript">
-	$FEED_URL = "{{ url_for('feed._feed',id=id, _external=True) }}"
-</script>
+
 <div class="page-body">
 
 <div class="page-header">
+	<div class="row">
+		{% if current_user.is_administrator() %}
+		<div class="tag">
+			<span class="lead">模板类型</span>
+			<select class="tags">
+				<option value="food">餐饮</option>
+				<option value="sold">零售</option>
+				<option value="teach">活动</option>
+				<option value="web">互联网</option>
+			</select>
+		</div>
+		{% endif %}
+	</div>
 	<div class="row">
 		<h1>
 			<input class="col-md-9 col-md-offset-1" type="text" name="title" id="title" placeholder="问卷标题..." value="{{ q.title }}">	
@@ -73,6 +84,11 @@
 	</div>	
 	<div class="panel-footer">
 		<a class="btn_close"><span class="glyphicon glyphicon-trash"></span></a>
+		<input type="checkbox" name="need" id="need"
+		{% if item.need %}
+		checked="checked" 
+		{% endif %}
+		> 必填
 	</div>
 </div>
 {% endfor %}

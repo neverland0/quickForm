@@ -10,6 +10,20 @@
 
 <div class="page-header">
 	<div class="row">
+		{% if current_user.is_administrator() %}
+		<div class="tag">
+			<span class="lead">模板类型</span>
+			<select class="tags">
+				<option value="food">餐饮</option>
+				<option value="sold">零售</option>
+				<option value="teach">活动</option>
+				<option value="web">互联网</option>
+			</select>
+		</div>
+		{% endif %}
+	</div>
+	<div class="row">
+		
 		<h1>
 			<input class="col-md-9 col-md-offset-1" type="text" name="title" id="title" placeholder="问卷标题...">	
 		</h1>
@@ -60,7 +74,8 @@
 		
 	</div>	
 	<div class="panel-footer">
-		<a class="btn_close"><span class="glyphicon glyphicon-trash"></span></a>
+		<a class="btn_close pull-right"><span class="glyphicon glyphicon-trash"></span></a>
+		<input type="checkbox" name="need" id="need"> 必填
 	</div>
 </div>
 
@@ -70,6 +85,8 @@
 <div class="get_back">
 	<textarea id="source_url"></textarea><button id="cp">复制链接</button>
 </div>
+
+<div id="qrcode"></div>
 
 </div>
 {% endblock %}
@@ -84,4 +101,5 @@
 {% block scripts %}
 {{ super() }}
 <script type=text/javascript src="{{ url_for('static', filename='design.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='jquery.qrcode.min.js') }}"></script>
 {% endblock %}

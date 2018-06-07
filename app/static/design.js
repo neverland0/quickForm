@@ -95,10 +95,13 @@ $(document).ready(function(){
 		same_flag=false;
 		a = $(this).siblings().filter(".div_question");
 		title = $(this).siblings().filter(".page-header").find("#title");
-
-		
+		tag = $(".tags").val();
+		//alert(tag);
 		var ques_nare = new Object();
 		ques_nare.title = title.val();
+		if(tag){
+			ques_nare.tag = tag;
+		}
 		ques_nare.items = new Array();
 
 		count = 1;
@@ -113,6 +116,7 @@ $(document).ready(function(){
 			item.no = count;
 			count++;
 			item.kind = $(this).find(".kind").val();
+			item.need = $(this).find("#need").prop("checked");
 			item.choice = new Array();
 			if(item.kind == "single" || item.kind == "multi")
 			{
@@ -127,10 +131,14 @@ $(document).ready(function(){
 					item.choice.push(c);
 				});
 				str_choice = item.choice.join(",");
+				var c_set = new Set();
 				item.choice.forEach(function(value,index,array){
-					if((str_choice.indexOf(value))!=(str_choice.lastIndexOf(value)))
+					if(c_set.has(value))
 					{
 						same_flag=true;
+					}
+					else{
+						c_set.add(value);
 					}
 				});
 			}
@@ -160,7 +168,7 @@ $(document).ready(function(){
 					document.execCommand("Copy");
 				});
 				$(".get_back").toggle();
-
+				$("#qrcode").qrcode(str_url);
 			//alert(result.result);
 			}
 

@@ -3,8 +3,20 @@
 {% block title %}模板库{% endblock %}
 
 {% block page_content %}
+<div class="div_head">
+    <div class="row head_content">
+        <div class="col-md-10 head_main" >
+        <ul class="nav nav-pills">
+            <li id="show_food" role="presentation" class="tags col-md-2"><a style="text-align: center" class="lead" href="#">餐饮</a></li>
+            <li id="show_sold" role="presentation" class="tags col-md-2"><a style="text-align: center" class="lead" href="#">零售</a></li>
+            <li id="show_teach" role="presentation" class="tags col-md-2"><a style="text-align: center" class="lead" href="#">活动</a></li>
+            <li id="show_web" role="presentation" class="tags col-md-2"><a style="text-align: center" class="lead" href="#">互联网</a></li>
+        </ul>
+        </div>
+    </div>
+</div>
 {% for ques in q %}
-<div class="div_item panel panel-default">
+<div class="div_item panel panel-default" id="{{ques.tag}}">
 	<div class="panel-heading"></div>
   <div class="panel-body">
     <h3>{{ ques.title }}</h3>

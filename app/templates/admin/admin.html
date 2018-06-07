@@ -46,7 +46,33 @@
 			</table>
   		</div>
 	</div>
-	
+	<div class="pagin">
+		<ul class="pagination">
+			<li{% if not pagination.has_prev %} class="disabled"{% endif %}>
+				<a href="{% if pagination.has_prev %}{{ url_for('admin._admin',page=pagination.page-1) }}{% else %}#{% endif %}">
+					&laquo;
+				</a>
+			</li>
+			{% for p in pagination.iter_pages() %}
+				{% if p %}
+					{% if p == pagination.page %}
+					<li class="active">
+						<a href="{{ url_for('admin._admin',page=p) }}">{{p}}</a>
+					</li>
+					{% else %}
+					<li>
+						<a href="{{ url_for('admin._admin',page=p) }}">{{p}}</a>
+					</li>
+					{% endif %}
+				{% else %}
+					<li class="disabled"><a href="#">&hellip;</a></li>
+				{% endif %}
+			{% endfor %}
+			<li>
+				<a href="{% if pagination.has_next %}{{ url_for('admin._admin',page=pagination.page+1) }}{% else %}#{% endif %}">&raquo;</a>
+			</li>
+		</ul>
+	</div>
 </div>
 
 {% for user in u %}

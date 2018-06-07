@@ -27,6 +27,22 @@ class User(UserMixin, db.Model):
             return True    
         return False
 
+    @staticmethod
+    def generate_fake(count=10):
+        from sqlalchemy.exc import IntegrityError
+        from random import seed
+        import forgery_py
+
+        seed()
+        for i in range(count):
+            u = User(email = forgery_py.internet.email_address(),
+                username = forgery_py.internet.user_name(True),
+                password = forgery_py.lorem_ipsum.word())
+            db.session.add(u)
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
     def __repr__(self):
         return '<User %r>' % self.username
 
@@ -46,6 +62,7 @@ class Questionnaire(mongo.Document):
         'collection':'questionnaire'
     }
     title = mongo.StringField(required = True,default = 'unamed questionnaire')
+    tag = mongo.StringField()
     timestamp = mongo.DateTimeField(
             default = datetime.datetime.now()
         )
@@ -58,6 +75,7 @@ class Item(mongo.Document):
     question = mongo.StringField(required = True)
     no = mongo.IntField()
     kind = mongo.StringField()
+    need = mongo.BooleanField()
     choice = mongo.ListField(mongo.StringField())
     vote = mongo.ListField(mongo.StringField())
     questionnaire = mongo.ReferenceField(Questionnaire)

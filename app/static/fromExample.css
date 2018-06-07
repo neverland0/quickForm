@@ -5,7 +5,16 @@
 	margin: 20px 20px 20px 20px;
 }
 
-.btn{
-
+.head_content{
+	
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
-
+.head_main{
+	border-radius: 3px;
+	background-color: #E8E8E8;
+}
+.tags{
+	margin-top: 20px;
+	margin-left: 140px;
+}

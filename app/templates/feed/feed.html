@@ -2,17 +2,19 @@
 
 {% block title%} Quick Form {% endblock %} 
 
+{% block body_attribs %} class="feedbg"{% endblock %}
+
 {% block content %}
-	<div class="container">
+	<div class="col-md-6 col-md-offset-3">
 		<form action="/f/{{id}}" method="post">
-	<h1>Quick Form</h1>
-	<h1>{{ title }}</h1>
+	
+	<h1 style="text-align: center;">{{ title }}</h1>
 	{% macro render_item(item) %}
 		{% if item.kind == "single" %}
 			{% for choice in item.choice if item.choice %}
 				<div class="radio">
   					<label>
-    					<input type="radio" name="{{ item.question }}" value="{{ choice }}">
+    					<input type="radio" name="{{ item.question }}" value="{{ choice }}"{% if item.need %}required="required"{% endif %}>
     					{{ choice }}
   					</label>
 				</div>
@@ -21,21 +23,21 @@
 			{% for choice in item.choice if item.choice %}
 				<div class="checkbox">
   					<label>
-    					<input type="checkbox" name="{{ item.question }}" value="{{ choice }}">
+    					<input type="checkbox" name="{{ item.question }}" value="{{ choice }}"{% if item.need %}required="required"{% endif %}>
     					{{ choice }}
   					</label>
 				</div>
 			{% endfor %}
 		{% elif item.kind == "blank" %}
-			<input type="text" name="{{ item.question }}" class="form-control" placeholder="blank">
+			<input type="text" name="{{ item.question }}" class="form-control" placeholder="blank"{% if item.need %}required="required"{% endif %}>
 		{% endif %}
 	{% endmacro %}
 
 	{% for item in items if item.question %}
 		<div class="panel panel-default">
   			<div class="panel-body">
-  				<span>{{ item.no }}</span>
-  				<h3>{{ item.question }}</h3>
+  				
+  				<h3>{% if item.need %}<span style="color: red">*</span>{% endif %} <span>{{ item.no }}</span>.{{ item.question }}</h3>
     			{{ render_item(item) }}		
   			</div>
 		</div>
@@ -45,3 +47,9 @@
 	</form>
 	</div>
 {% endblock %}}
+
+{% block styles %} 
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='feed.css') }}" />
+
+{% endblock %}

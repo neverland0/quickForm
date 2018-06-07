@@ -3,38 +3,7 @@
 {% block title %}快捷表单{% endblock %}
 
 {% block page_content %}
-<!--
-<div class="jumbotron">
-	<div class="page-header">
-    	<h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
-	</div>
-	<div class="btn_col">
-		{% if current_user.is_authenticated %}
-		{% if current_user.is_administrator() %}
-		<div class="btn_example">
-			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.design') }}"> 创建模板 </a>	
-		</div>
-		<div class="btn_check">
-			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.old',str='Example') }}"> 管理模板 </a>	
-		</div>
-		<div class="btn_admin">
-			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('admin._admin') }}"> 管理员面板 </a>	
-		</div>
-		{% else %}
-		<div class="btn_create">
-			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.design') }}"> 创建问卷 </a>	
-		</div>
-		<div class="btn_old">
-			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.old',str='My Questionnaire') }}"> 我的问卷 </a>	
-		</div>
-		<div class="btn_from">
-			<a class="btn btn-primary btn-block btn-lg" href="{{ url_for('main.example') }}"> 使用模板 </a>	
-		</div>
-		{% endif %}
-		{% endif %}
-	</div>
-</div>
--->
+
 
 {% endblock %}
 {% block index_content %}

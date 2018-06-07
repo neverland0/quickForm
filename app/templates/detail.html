@@ -12,9 +12,9 @@
   <li role="presentation"><a href="#table" data-toggle="tab">表格</a></li>
 </ul>
 <div class="tab-content">
-    <div class="tab-pane fade in active" id="specific">
+    <div class="tab-pane fade in active panel panel-default" id="specific">
         <nav aria-label="...">
-            <ul class="pager">
+            <ul class="pager"> 
                 <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
                 <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
             </ul>
@@ -44,7 +44,7 @@
                             <ul class="list-group">
                             {% for choice_item in answer_item.choice if choice_item[1] %}
                                 {% if loop.index == 1 %}
-                                    <li class="list-group-item list-group-item-success">{{choice_item[0]}}</li>
+                                    <li class="list-group-item active">{{choice_item[0]}}</li>
                                     
                                 {% endif %}
                                 
@@ -55,7 +55,7 @@
                             <ul class="list-group">
                             {% for choice_item in answer_item.choice %}
                                 {% if choice_item[1] %}
-                                    <li class="list-group-item list-group-item-success">{{choice_item[0]}}</li>
+                                    <li class="list-group-item active">{{choice_item[0]}}</li>
                                 {% else %}
                                     <li class="list-group-item">{{choice_item[0]}}</li>
                                 {% endif %}
@@ -88,7 +88,7 @@
       
     </div>	
     
-    <div class="tab-pane fade " id="table">
+    <div class="tab-pane fade panel panel-default" id="table">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
         <h1>{{ q.title }}</h1>

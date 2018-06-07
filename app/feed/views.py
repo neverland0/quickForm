@@ -31,7 +31,7 @@ def _feed(id):
             
         a.save()
         
-        return redirect(url_for('.finish'))
+        return render_template('feed/finish.html')
     return render_template('feed/feed.html',title = title,items = i,id = id)
 
 @feed.route('/finish')
