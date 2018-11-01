@@ -1,2 +1,2 @@
 # quickForm
-a simple web form application for collecting information
+homework code in python
